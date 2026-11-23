@@ -1,0 +1,141 @@
+{
+ "name": "Chemistry",
+ "book": "NCERT",
+ "text_dir": "subjects/chemistry/ncert",
+ "text_names": "c11-chNN-name.md and c12-chNN-name.md",
+ "chapters": [
+  {
+   "name": "Some Basic Concepts of Chemistry",
+   "group": "Class 11",
+   "tags": [
+    "physical"
+   ]
+  },
+  {
+   "name": "Structure of Atom",
+   "group": "Class 11",
+   "tags": [
+    "physical"
+   ]
+  },
+  {
+   "name": "Classification of Elements and Periodicity in Properties",
+   "group": "Class 11",
+   "tags": [
+    "inorganic"
+   ]
+  },
+  {
+   "name": "Chemical Bonding and Molecular Structure",
+   "group": "Class 11",
+   "tags": [
+    "inorganic"
+   ]
+  },
+  {
+   "name": "Thermodynamics",
+   "group": "Class 11",
+   "tags": [
+    "physical"
+   ]
+  },
+  {
+   "name": "Equilibrium",
+   "group": "Class 11",
+   "tags": [
+    "physical"
+   ]
+  },
+  {
+   "name": "Redox Reactions",
+   "group": "Class 11",
+   "tags": [
+    "physical"
+   ]
+  },
+  {
+   "name": "Organic Chemistry: Some Basic Principles and Techniques",
+   "group": "Class 11",
+   "tags": [
+    "organic"
+   ]
+  },
+  {
+   "name": "Hydrocarbons",
+   "group": "Class 11",
+   "tags": [
+    "organic"
+   ]
+  },
+  {
+   "name": "Solutions",
+   "group": "Class 12",
+   "tags": [
+    "physical"
+   ]
+  },
+  {
+   "name": "Electrochemistry",
+   "group": "Class 12",
+   "tags": [
+    "physical"
+   ]
+  },
+  {
+   "name": "Chemical Kinetics",
+   "group": "Class 12",
+   "tags": [
+    "physical"
+   ]
+  },
+  {
+   "name": "The d- and f-Block Elements",
+   "group": "Class 12",
+   "tags": [
+    "inorganic"
+   ]
+  },
+  {
+   "name": "Coordination Compounds",
+   "group": "Class 12",
+   "tags": [
+    "inorganic"
+   ]
+  },
+  {
+   "name": "Haloalkanes and Haloarenes",
+   "group": "Class 12",
+   "tags": [
+    "organic"
+   ]
+  },
+  {
+   "name": "Alcohols, Phenols and Ethers",
+   "group": "Class 12",
+   "tags": [
+    "organic"
+   ]
+  },
+  {
+   "name": "Aldehydes, Ketones and Carboxylic Acids",
+   "group": "Class 12",
+   "tags": [
+    "organic"
+   ]
+  },
+  {
+   "name": "Amines",
+   "group": "Class 12",
+   "tags": [
+    "organic"
+   ]
+  },
+  {
+   "name": "Biomolecules",
+   "group": "Class 12",
+   "tags": [
+    "organic"
+   ]
+  }
+ ]
+}

@@ -1,0 +1,232 @@
+{
+ "name": "Biology",
+ "book": "NCERT",
+ "text_dir": "ncert",
+ "text_names": "c11-chNN-name.md and c12-chNN-name.md",
+ "chapters": [
+  {
+   "name": "The Living World",
+   "group": "Class 11",
+   "tags": [
+    "botany"
+   ]
+  },
+  {
+   "name": "Biological Classification",
+   "group": "Class 11",
+   "tags": [
+    "botany"
+   ]
+  },
+  {
+   "name": "Plant Kingdom",
+   "group": "Class 11",
+   "tags": [
+    "botany"
+   ]
+  },
+  {
+   "name": "Animal Kingdom",
+   "group": "Class 11",
+   "tags": [
+    "zoology"
+   ]
+  },
+  {
+   "name": "Morphology of Flowering Plants",
+   "group": "Class 11",
+   "tags": [
+    "botany"
+   ]
+  },
+  {
+   "name": "Anatomy of Flowering Plants",
+   "group": "Class 11",
+   "tags": [
+    "botany"
+   ]
+  },
+  {
+   "name": "Structural Organisation in Animals",
+   "group": "Class 11",
+   "tags": [
+    "zoology"
+   ]
+  },
+  {
+   "name": "Cell: The Unit of Life",
+   "group": "Class 11",
+   "tags": [
+    "botany"
+   ]
+  },
+  {
+   "name": "Biomolecules",
+   "group": "Class 11",
+   "tags": [
+    "botany"
+   ]
+  },
+  {
+   "name": "Cell Cycle and Cell Division",
+   "group": "Class 11",
+   "tags": [
+    "botany"
+   ]
+  },
+  {
+   "name": "Photosynthesis in Higher Plants",
+   "group": "Class 11",
+   "tags": [
+    "botany"
+   ]
+  },
+  {
+   "name": "Respiration in Plants",
+   "group": "Class 11",
+   "tags": [
+    "botany"
+   ]
+  },
+  {
+   "name": "Plant Growth and Development",
+   "group": "Class 11",
+   "tags": [
+    "botany"
+   ]
+  },
+  {
+   "name": "Breathing and Exchange of Gases",
+   "group": "Class 11",
+   "tags": [
+    "zoology"
+   ]
+  },
+  {
+   "name": "Body Fluids and Circulation",
+   "group": "Class 11",
+   "tags": [
+    "zoology"
+   ]
+  },
+  {
+   "name": "Excretory Products and their Elimination",
+   "group": "Class 11",
+   "tags": [
+    "zoology"
+   ]
+  },
+  {
+   "name": "Locomotion and Movement",
+   "group": "Class 11",
+   "tags": [
+    "zoology"
+   ]
+  },
+  {
+   "name": "Neural Control and Coordination",
+   "group": "Class 11",
+   "tags": [
+    "zoology"
+   ]
+  },
+  {
+   "name": "Chemical Coordination and Integration",
+   "group": "Class 11",
+   "tags": [
+    "zoology"
+   ]
+  },
+  {
+   "name": "Sexual Reproduction in Flowering Plants",
+   "group": "Class 12",
+   "tags": [
+    "botany"
+   ]
+  },
+  {
+   "name": "Human Reproduction",
+   "group": "Class 12",
+   "tags": [
+    "zoology"
+   ]
+  },
+  {
+   "name": "Reproductive Health",
+   "group": "Class 12",
+   "tags": [
+    "zoology"
+   ]
+  },
+  {
+   "name": "Principles of Inheritance and Variation",
+   "group": "Class 12",
+   "tags": [
+    "botany"
+   ]
+  },
+  {
+   "name": "Molecular Basis of Inheritance",
+   "group": "Class 12",
+   "tags": [
+    "botany"
+   ]
+  },
+  {
+   "name": "Evolution",
+   "group": "Class 12",
+   "tags": [
+    "zoology"
+   ]
+  },
+  {
+   "name": "Human Health and Disease",
+   "group": "Class 12",
+   "tags": [
+    "zoology"
+   ]
+  },
+  {
+   "name": "Microbes in Human Welfare",
+   "group": "Class 12",
+   "tags": [
+    "botany"
+   ]
+  },
+  {
+   "name": "Biotechnology: Principles and Processes",
+   "group": "Class 12",
+   "tags": [
+    "zoology"
+   ]
+  },
+  {
+   "name": "Biotechnology and its Applications",
+   "group": "Class 12",
+   "tags": [
+    "zoology"
+   ]
+  },
+  {
+   "name": "Organisms and Populations",
+   "group": "Class 12",
+   "tags": [
+    "botany"
+   ]
+  },
+  {
+   "name": "Ecosystem",
+   "group": "Class 12",
+   "tags": [
+    "botany"
+   ]
+  },
+  {
+   "name": "Biodiversity and Conservation",
+   "group": "Class 12",
+   "tags": [
+    "botany"
+   ]
+  }
+ ]
+}

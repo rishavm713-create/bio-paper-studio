@@ -1,0 +1,79 @@
+{
+ "name": "NEST",
+ "full_name": "National Entrance Screening Test (NEST), biology part",
+ "order": 2,
+ "subject_label": "Biology",
+ "summary": "+3 / −1, MSQ +4",
+ "subjects": [
+  "biology"
+ ],
+ "sections": [
+  {
+   "name": "Biology",
+   "type": "MCQ",
+   "marks": 3,
+   "count": 16
+  },
+  {
+   "name": "Biology",
+   "type": "MSQ",
+   "marks": 4,
+   "count": 4
+  }
+ ],
+ "time": "50 min",
+ "marking": "Single-correct: +3 / −1. Multiple-correct: +4, no negative marking",
+ "chapter_groups": [
+  {
+   "subject": "biology"
+  }
+ ],
+ "pool": [
+  {
+   "subject": "biology",
+   "group": "Class 11",
+   "tag": "botany"
+  },
+  {
+   "subject": "biology",
+   "group": "Class 11",
+   "tag": "zoology"
+  },
+  {
+   "subject": "biology",
+   "group": "Class 12",
+   "tag": "botany"
+  },
+  {
+   "subject": "biology",
+   "group": "Class 12",
+   "tag": "zoology"
+  }
+ ],
+ "dpp_keep_sections": false,
+ "marks_in_label": false,
+ "minutes_per_question": 1.1,
+ "papers_prefix": "nest",
+ "profile": "profiles/nest.md",
+ "style": "NCERT 11-12 plus reasoning. Passage- or experiment-based questions, some graph reading.",
+ "weightage": "See the profile file (profiles/nest.md)",
+ "difficulty": "1-5 rubric in the profile file",
+ "sources": [
+  "https://www.nestexam.in/qnsans/NEST-17.pdf",
+  "https://www.nestexam.in/qnsans/NEST-18.pdf",
+  "https://www.nestexam.in/qnsans/NEST-2019-Session-1.pdf",
+  "https://www.nestexam.in/qnsans/NEST-2019-Session-2.pdf",
+  "https://www.nestexam.in/qnsans/NEST-2020-Session-1.pdf",
+  "https://www.nestexam.in/qnsans/NEST-2020-Session-2.pdf",
+  "https://www.nestexam.in/qnsans/NEST-2021-Session-1.pdf",
+  "https://www.nestexam.in/qnsans/NEST-2021-Session-2.pdf",
+  "https://www.nestexam.in/qnsans/NEST-2022-Session-1.pdf",
+  "https://www.nestexam.in/qnsans/NEST-2022-Session-2.pdf",
+  "https://www.nestexam.in/qnsans/NEST-2023-Session-1.pdf",
+  "https://www.nestexam.in/qnsans/NEST-2023-Session-2.pdf",
+  "https://www.nestexam.in/qnsans/NEST-2024-Session-1.pdf",
+  "https://www.nestexam.in/qnsans/NEST-2024-Session-2.pdf",
+  "https://www.nestexam.in/qnsans/NEST-25.pdf",
+  "https://www.nestexam.in/qnsans/NEST-26.pdf"
+ ]
+}

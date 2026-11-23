@@ -1,0 +1,84 @@
+{
+ "name": "IIT JAM",
+ "full_name": "IIT JAM Biotechnology (BT)",
+ "order": 3,
+ "subject_label": "Biology",
+ "summary": "MCQ, MSQ, NAT",
+ "subjects": [
+  "biotechnology",
+  "biology"
+ ],
+ "sections": [
+  {
+   "name": "Section A (MCQ)",
+   "type": "MCQ",
+   "marks": 1,
+   "count": 8
+  },
+  {
+   "name": "Section A (MCQ)",
+   "type": "MCQ",
+   "marks": 2,
+   "count": 17
+  },
+  {
+   "name": "Section B (MSQ)",
+   "type": "MSQ",
+   "marks": 2,
+   "count": 8
+  },
+  {
+   "name": "Section C (NAT)",
+   "type": "NAT",
+   "marks": 1,
+   "count": 8
+  },
+  {
+   "name": "Section C (NAT)",
+   "type": "NAT",
+   "marks": 2,
+   "count": 9
+  }
+ ],
+ "time": "150 min",
+ "marking": "MCQ: −1/3 for 1-mark, −2/3 for 2-mark wrong answers. MSQ and NAT: no negative, no partial marks",
+ "chapter_groups": [
+  {
+   "subject": "biotechnology"
+  },
+  {
+   "subject": "biology",
+   "group": "Class 12"
+  }
+ ],
+ "pool": [
+  {
+   "subject": "biotechnology"
+  }
+ ],
+ "dpp_keep_sections": true,
+ "marks_in_label": true,
+ "minutes_per_question": 3,
+ "papers_prefix": "jam",
+ "profile": "profiles/jam.md",
+ "style": "Biology at Class 12 and BSc level: cell and molecular biology, biochemistry, genetics, microbiology, immunology and basic biotechnology. NAT questions need a numeric answer (for example genetics ratios, enzyme kinetics or dilution).",
+ "weightage": "See the profile file (profiles/jam.md)",
+ "difficulty": "1-5 rubric in the profile file",
+ "sources": [
+  "https://jam.iitr.ac.in/assets/JAMPreviousYearsQuestionPapers/JAM2012/QPs/BT2012.pdf",
+  "https://jam.iitr.ac.in/assets/JAMPreviousYearsQuestionPapers/JAM2013/QPs/BT2013.pdf",
+  "https://jam.iitr.ac.in/assets/JAMPreviousYearsQuestionPapers/JAM2014/QPs/BT2014.pdf",
+  "https://jam.iitr.ac.in/assets/JAMPreviousYearsQuestionPapers/JAM2015/QPs/BT2015.pdf",
+  "https://jam.iitr.ac.in/assets/JAMPreviousYearsQuestionPapers/JAM2016/QPs/BT2016.pdf",
+  "https://jam.iitr.ac.in/assets/JAMPreviousYearsQuestionPapers/JAM2017/QPs/BT2017.pdf",
+  "https://jam.iitr.ac.in/assets/JAMPreviousYearsQuestionPapers/JAM2018/QPs/BT2018.pdf",
+  "https://jam.iitr.ac.in/assets/JAMPreviousYearsQuestionPapers/JAM2019/QPs/BT2019.pdf",
+  "https://jam.iitr.ac.in/assets/JAMPreviousYearsQuestionPapers/JAM2020/QPs/BT2020.pdf",
+  "https://jam.iitr.ac.in/assets/JAMPreviousYearsQuestionPapers/JAM2021/QPs/BT2021.pdf",
+  "https://jam2026.iitb.ac.in/files/BT2022.pdf",
+  "https://jam2026.iitb.ac.in/files/BT2023.pdf",
+  "https://jam2026.iitb.ac.in/files/BT2024.pdf",
+  "https://jam2026.iitb.ac.in/files/BT2025.pdf",
+  "https://jam2026.iitb.ac.in/files/BT_QP.pdf"
+ ]
+}

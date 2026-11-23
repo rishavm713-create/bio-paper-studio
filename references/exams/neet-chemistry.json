@@ -1,0 +1,70 @@
+{
+ "name": "NEET Chemistry",
+ "full_name": "NEET (UG), chemistry part",
+ "order": 5,
+ "subject_label": "Chemistry",
+ "summary": "+4 / −1",
+ "subjects": [
+  "chemistry"
+ ],
+ "sections": [
+  {
+   "name": "Chemistry",
+   "type": "MCQ",
+   "marks": 4,
+   "count": 45
+  }
+ ],
+ "time": "45 min",
+ "marking": "+4 for correct, −1 for wrong, 0 for unattempted",
+ "chapter_groups": [
+  {
+   "subject": "chemistry"
+  }
+ ],
+ "pool": [
+  {
+   "subject": "chemistry",
+   "group": "Class 11",
+   "tag": "physical"
+  },
+  {
+   "subject": "chemistry",
+   "group": "Class 11",
+   "tag": "inorganic"
+  },
+  {
+   "subject": "chemistry",
+   "group": "Class 11",
+   "tag": "organic"
+  },
+  {
+   "subject": "chemistry",
+   "group": "Class 12",
+   "tag": "physical"
+  },
+  {
+   "subject": "chemistry",
+   "group": "Class 12",
+   "tag": "inorganic"
+  },
+  {
+   "subject": "chemistry",
+   "group": "Class 12",
+   "tag": "organic"
+  }
+ ],
+ "dpp_keep_sections": false,
+ "marks_in_label": false,
+ "minutes_per_question": 1.0,
+ "papers_prefix": "neet",
+ "profile": "profiles/neet-chemistry.md",
+ "style": "NCERT Class 11 and 12 chemistry, NCERT facts and reactions. Mix physical-chemistry numericals, inorganic facts and trends, and organic reactions and named reagents; include assertion-reason, statement I/II and match-the-column items, as recent NEET papers do.",
+ "weightage": "NTA does not publish chapter weightage. Spread questions roughly evenly over physical, inorganic and organic chemistry, all chapters in the pool.",
+ "difficulty": "Mixed = 30% easy, 50% medium, 20% hard. 1 = direct NCERT line, 3 = one-step numerical or two facts combined, 5 = multi-step numerical or reaction sequence.",
+ "sources": [
+  "https://neet.nta.nic.in/",
+  "https://ncert.nic.in/textbook.php"
+ ],
+ "source_note": "Pattern (45 chemistry MCQs of 180, 180 min total, +4/−1, no optional Section B since 2025) is from the NTA NEET (UG) information bulletin at neet.nta.nic.in. Chapter list follows the NCERT 2026-27 chemistry textbooks at ncert.nic.in. Both sites refused automated fetches on 2026-11-23, so re-check against the latest bulletin before relying on it."
+}

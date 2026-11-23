@@ -1,0 +1,417 @@
+# IIT JAM Biotechnology (BT) 2019 - full paper
+Source: https://jam.iitr.ac.in/assets/JAMPreviousYearsQuestionPapers/JAM2019/QPs/BT2019.pdf
+Figures/images not captured (text only).
+
+Paper Specific Instructions
+1. The examination is of 3 hours duration. There are a total of 60 questions carrying 100 marks. The entire
+paper is divided into three sections, A, B and C. All sections are compulsory. Questions in each section are
+of different types.
+2. Section – A contains a total of 30 Multiple Choice Questions (MCQ). Each MCQ type question has four
+choices out of which only one choice is the correct answer. Questions Q.1 – Q.30 belong to this section
+and carry a total of 50 marks. Q.1 – Q.10 carry 1 mark each and Questions Q.11 – Q.30 carry 2 marks
+each.
+3. Section – B contains a total of 10 Multiple Select Questions (MSQ). Each MSQ type question is similar
+to MCQ but with a difference that there may be one or more than one choice(s) that are correct out of the
+four given choices. The candidate gets full credit if he/she selects all the correct answers only and no
+wrong answers. Questions Q.31 – Q.40 belong to this section and carry 2 marks each with a total of 20
+marks.
+4. Section – C contains a total of 20 Numerical Answer Type (NAT) questions. For these NAT type
+questions, the answer is a real number which needs to be entered using the virtual keyboard on the monitor.
+No choices will be shown for these type of questions. Questions Q.41 – Q.60 belong to this section and
+carry a total of 30 marks. Q.41 – Q.50 carry 1 mark each and Questions Q.51 – Q.60 carry 2 marks each.
+5. In all sections, questions not attempted will result in zero mark. In Section – A (MCQ), wrong answer will
+result in NEGATIVE marks. For all 1 mark questions, 1/3 marks will be deducted for each wrong answer.
+For all 2 marks questions, 2/3 marks will be deducted for each wrong answer. In Section – B (MSQ), there
+is NO NEGATIVE and NO PARTIAL marking provisions. There is NO NEGATIVE marking in
+Section – C (NAT) as well.
+6. Only Virtual Scientific Calculator is allowed. Charts, graph sheets, tables, cellular phone or other
+electronic gadgets are NOT allowed in the examination hall.
+7. The Scribble Pad will be provided for rough work.
+SECTION – A
+MULTIPLE CHOICE QUESTIONS (MCQ)
+Q. 1 – Q.10 carry one mark each.
+The glycosidic linkages in cellulose and amylose are ________, respectively.
+(A) α 1-4 and β 1-4
+(B) β 1-4 and α 1-4
+(C) β 1-4 and α 1-6
+(D) α 1-4 and α 1-2
+A mutation in the operator locus of lac operon that confers constitutive expression of β-
+galactosidase is ________.
+(A) cis dominant
+(B) trans dominant
+(C) co-dominant
+(D) dominant negative
+Which one of the points ܲ
+ൌቀ
+ଷ
+ଶ,
+ଵ
+ଶቁ, ܳ
+ൌቀ
+ଵ
+ଶ,
+ଷ
+ଶቁ, ܴ
+ൌቀ
+ଷ
+ଶ,
+ଵଵ
+ଶቁ and ܵ
+ൌቀ
+ଵଵ
+ଶ,
+ଷ
+ଶቁ lies ABOVE the
+parabola ݕൌ2ݔଶ and INSIDE the circle ݔଶ൅ݕଶൌ4 ?
+(A) P
+(B) Q
+(C) R
+(D) S
+Let ܷ
+ൌሼ1, 2, 3, 4, 5ሽ. A subset ܵ is chosen uniformly at random from the non-empty subsets of ܷ.
+What is the probability that ܵ does NOT have two consecutive elements?
+(A) 9/31
+(B) 10/31
+(C) 11/31
+(D) 12/31
+Which one of the following figures represents the correct sequence of phases in adult eukaryotic
+cell cycle?
+At what pH does poly-Glu in an aqueous solution form α-helical structure?
+(A) 3
+(B) 7
+(C) 9
+(D) 12
+The dimensions of coefficient of viscosity are _______.
+(A) ML-1T-1
+(B) ML-1T-2
+(C) ML-2T-2
+(D) ML-2T-1
+Match the entries in Group I with the entries in Group II
+Group I
+Group II
+(P) Nylon
+(i) Isoprene
+(Q) Natural rubber
+(ii) Hexose
+(R) Starch
+(iii) Amino acid
+(S) Myoglobin
+(iv) Adipic acid
+(A) P-iv, Q-i, R-ii, S-iii
+(B) P-iv, Q-i, R-iii, S-ii
+(C) P-iv, Q-iii, R-ii, S-i
+(D) P-ii, Q-iv, R-i, S-iii
+The technique that involves impacting samples with electrons is _______.
+(A) NMR spectroscopy
+(B) ESI mass spectrometry
+(C) IR spectroscopy
+(D) UV-vis spectroscopy
+The orbital angular momentum of hydrogen atom in the ground state is ________.
+(A) 0
+(B)
+௛
+ଶగ
+(C)
+௛
+ଶ
+(D) ݄
+Q. 11 – Q. 30 carry two marks each.
+Let ܽ
+ൌ √ହାଵ
+ଶ and ܾ
+ൌ √ହିଵ
+ଶ
+. Then,
+lim
+௡→ஶ
+௔೙ା௕೙
+௔೙ି௕೙
+(A) is 1
+(B) is ½
+(C) is 0
+(D) does not exist
+In how many ways can one write the elements 1, 2, 3, 4 in a sequence ݔଵ, ݔଶ, ݔଷ, ݔସ with ݔ௜്݅
+∀݅?
+(A) 9
+(B) 10
+(C) 11
+(D) 12
+Simplify
+ୱ୧୬஺
+ଵାୡ୭ୱ஺ +
+ଵା ୡ୭ୱ஺
+ୱ୧୬஺ .
+(A) 2 sec ܣ
+(B) 2 cosec ܣ
+(C) sec ܣ
+(D) cosec ܣ
+The evolution of eyes in octopus and in human is an example of ________.
+(A) divergent evolution
+(B) convergent evolution
+(C) adaptive radiation
+(D) genetic drift
+Which one of the following modifications occurs both on DNA and protein?
+(A) ADP-ribosylation
+(B) Methylation
+(C) Sumoylation
+(D) Ubiquitination
+Solutions of the following peptides are prepared separately at a concentration of 1 mM. Among
+these four, which one has the highest A280?
+(A) Ser-Val-Trp-Asp-Phe-Gly-Tyr-Trp-Ala
+(B) Gln-Leu-Glu-Phe-Thr-Leu-Asp-Gly-Tyr
+(C) Met-Gly-Val-Ileu-Asp-Ser-Ala-Trp-His
+(D) His-Pro-Gly-Asp-Val-Ileu-Phe-Met-Leu
+The free energy required to synthesize a mixed anhydride bond of 1,3-bisphosphoglycerate is
+generated by the oxidation of ________.
+(A) an aldehyde to acid
+(B) an alcohol to acid
+(C) an alcohol to aldehyde
+(D) NADH to NAD+
+The following reaction is an example of ___________.
+(A) enolization
+(B) racemization
+(C) isomerization
+(D) epimerization
+Which one of the following parameters changes upon doubling the enzyme concentration?
+(A) KM
+(B) Vmax
+(C) kcat
+(D) Keq
+Which one of the following statements is a correct description of modes of action of taxol and
+colchicine?
+(A) Taxol causes DNA damage and colchicine prevents microtubule formation
+(B) Taxol stabilizes microtubules and colchicine inhibits protein synthesis
+(C) Taxol destabilizes microtubules and colchicine promotes microtubule formation
+(D) Taxol stabilizes microtubules and colchicine prevents microtubule formation
+In a simple microscope, _______.
+(A) a lens with negative power is used
+(B) the focal length of the lens is less than the least distance for clear vision
+(C) the focal length of the lens is greater than the least distance for clear vision
+(D) magnification depends only on the focal length of the lens
+Which one of the following statements is INCORRECT with respect to bacterial conjugation?
+(A) It facilitates transfer of genetic material
+(B) It requires flagellum
+(C) It can spread antibiotic resistance
+(D) It can transfer virulence factors
+A particle starting from rest is subjected to a constant force. The plot of distance traveled along the
+direction of the force as a function of time is a/an ______.
+(A) straight line
+(B) circle
+(C) parabola
+(D) ellipse
+Indole acetic acid (IAA) is involved in ______.
+(A) gravitropism
+(B) flowering
+(C) ripening
+(D) senescence
+Which one of the following remains unchanged when light waves enter water from air?
+(A) Wavelength
+(B) Wavenumber
+(C) Frequency
+(D) Intensity
+According to the kinetic theory of gases, the average energy of a diatomic molecule in an ideal gas
+depends on _______.
+(A) mass of each atom and the temperature
+(B) mass of each atom and the bond length
+(C) mass of each atom, bond length, and temperature
+(D) temperature only
+Match the entries in Group I with entries in Group II
+Group I
+Group II
+(P) Bacteria
+(i) Malaria
+(Q) Virus
+(ii) Tuberculosis
+(R) Protozoa
+(iii) Influenza
+(S) Autoantibodies
+(iv) Myasthenia gravis
+(A) P-ii, Q-i, R-iii, S-iv
+(B) P-ii, Q-iii, R-i, S-iv
+(C) P-iv, Q-iii, R-i, S-ii
+(D) P-i, Q-iv, R-ii, S-iii
+pKa increases in the order _______.
+(A) HN3 > NH3OH+ > N2H5+ > NH3
+(B) NH3OH+ > N2H5+ > HN3 > NH3
+(C) NH3 > NH3OH+ > N2H5+ > HN3
+(D) HN3 > N2H5+ > NH3 > NH3OH+
+H2 reacts with trans-(Ph3P)2Ir(CO)Cl to primarily produce _______.
+Among the following species, the metal center that has the highest number of unpaired electrons is
+_______.
+(A) VCl4
+(B) Ni(CO)4
+(C) [AuCl4]
+(D) [CdBr4]2
+SECTION - B
+MULTIPLE SELECT QUESTIONS (MSQ)
+Q. 31 – Q. 40 carry two marks each.
+Pick the correct statement(s) with respect to the inter-conversion of the topoisomers of a circularly
+closed double stranded DNA.
+(A) Only one strand needs to be cut
+(B) Both strands have to be cut
+(C) No strand needs to be cut
+(D) ATP is required for inter-conversion
+Let ܷ
+ൌሼ1, 2, … , 15ሽ. Let ܲ
+⊆ܷ
+consist of all prime numbers, ܳ
+⊆ܷ
+consist of all even numbers
+and ܴ
+⊆ܷ
+consist of all multiples of 3. Let ܶ
+ൌܲ
+െܳ
+. Then, which of the following is/are
+CORRECT?
+(A) |ܶ| ൌ5 and |ܶ
+∪ܴ
+| ൌ 9
+(B) |ܶ| ൌ6 and |ܶ
+∪ܴ
+| ൌ 9
+(C) |ܶ| ൌ5 and |ܶ
+∩ܴ
+| ൌ 1
+(D) |ܶ| ൌ6 and |ܶ
+∩ܴ
+| ൌ 1
+Let ݂ሺݔሻൌሺݔെ1ሻሺݔെ2ሻሺݔെ3ሻሺݔെ4ሻ and let ߙൌ݂
+ሺ
+ଷ
+ଶሻ, ߚൌ݂
+ቀ
+ହ
+ଶቁ and ߛൌ ݂ሺ
+଻
+ଶሻ.
+Which of the following is/are CORRECT?
+(A) ߙ and ߚ have the same sign
+(B) ߙ and ߛ have the same sign
+(C) ߚ and ߛ have the same sign
+(D) ߙߚ and ߚߛ have the same sign
+The characteristic oxygen binding profile of hemoglobin shown below arises due to the ________.
+(A) quaternary structure
+(B) subunit dissociation
+(C) cooperativity
+(D) conformational change
+The advantage(s) of storing chemical energy in the form of starch and not as free glucose is/are that
+it________.
+(A) minimizes diffusion
+(B) enables compact storage
+(C) reduces osmotic pressure
+(D) protects against chemical reactivity of aldehyde groups
+Which of the following cell types can develop from myeloid lineage?
+(A) Macrophages
+(B) T lymphocytes
+(C) B lymphocytes
+(D) Erythrocytes
+Electromagnetic waves _______.
+(A) carry energy
+(B) carry momentum
+(C) are transverse in nature while travelling in vacuum
+(D) do not need a material medium to travel
+O2 pressure (in torrs)
+Fraction saturation
+0.5
+1.0
+Which of the following statement(s) is/are true?
+(A) In intrinsic semiconductors, the number of electrons is equal to the number of holes at any
+temperature
+(B) An intrinsic semiconductor changes to an n-type semiconductor upon addition of a trivalent
+element
+(C) The shape of the I-V characteristics of a p-n diode is a straight line
+(D) In the reverse bias condition, the current in a p-n diode is due to the minority carriers
+BF3 reacts readily with ________.
+(A) C5H5N
+(B) SnCl2
+(C) SO3
+(D) (C5H5N)SnCl2
+The reaction of (R)-2-bromobutane with CN proceeds by ________.
+(A) retention of configuration
+(B) inversion of configuration
+(C) formation of CH2=CH(CH2CH3)
+(D) formation of (S)-2-methylbutanenitrile
+SECTION – C
+NUMERICAL ANSWER TYPE (NAT)
+Q. 41 – Q. 50 carry one mark each.
+C3 plants utilize 18 molecules of ATP to synthesize one molecule of glucose from CO2. How many
+molecules of ATP equivalents are used by C4 plants to synthesize one molecule of glucose from
+CO2?
+A 0.1% (w/v) solution of a protein absorbs 20% of the incident light. What fraction of light is
+transmitted if the concentration is increased to 0.4%? [Correct to two decimal places]
+Let XYZ be an equilateral triangle and let P, Q, R be the mid points of YZ, XZ, and XY,
+respectively.
+Let ݎൌ
+஺௥௘௔ሺ∆ ௉ொோሻ
+஺௥௘௔ሺ∆ ௑௒௓ሻ.
+The value of r is _______.
+Q.44 Let ܰ be the set of natural numbers and ݂:ܰ
+↦ܰ
+be defined by
+݂
+ሺݔሻൌ൜
+ݔ/2,
+ݔ ݅ݏ ݁ݒ݁݊
+3ݔ൅1,
+ݔ ݅ݏ ݋݀݀
+Let ݂
+௡ሺݔሻ denote the ݊-fold composition of ݂ሺݔሻ. What is the smallest integer ࢔ such that ݂
+௡ሺ13ሻൌ1 ?
+Heterozygous female fruit flies with gray body and purple eyes were mated with homozygous
+males with black body and red eyes. The number of offspring obtained and their phenotypes are
+shown below:
+Number of offspring
+Phenotype
+Gray body–purple eyes
+Black body–red eyes
+Gray body–red eyes
+Black body–purple eyes
+Calculate the recombination frequency.
+Proinsulin is an 84 residue polypeptide with six cysteines. How many different disulfide
+combinations are possible?
+The refractive index of a liquid relative to air is 1.5. Calculate the ratio of the real depth to the
+apparent depth when the liquid is taken in a beaker.
+A metallic wire of electrical resistance 40 Ω is bent in the form of a square loop. The resistance
+between any two diagonally opposite corners is ________ Ω.
+The total number of lone pairs of electrons in NO2F is _______.
+The total number of multiplet peaks in the 1H NMR spectrum of 1,3,5-tri-isopropylbenzene in
+CDCl3 is ________.
+Q. 51 – Q. 60 carry two marks each.
+A schematic representation of restriction fragment length polymorphism (RFLP) analysis of a
+sample population is shown below. The number of people exhibiting a given pattern is indicated
+above the lanes.
+Calculate the frequency of 6.5 kb allele. [Correct to two decimal places]
+Q.52 The value of ׬ x sin x dx
+π
+is ______.
+Phosphoglucoisomerase catalyzes the following reaction:
+If 0.05% of the original concentration of Glu-6-P remains at equilibrium, then the equilibrium
+constant of this reaction is________.
+In a bacterium, a mutation resulted in an increase of KS (substrate-specific constant) for ammonium
+from 50 µM to 5000 µM without affecting µmax. The specific growth rate (µ) of the mutant growing
+on 0.5 mM ammonium in the medium decreases by a factor of ________.
+The total number of DNA molecules present after 5 cycles of polymerase chain reaction (PCR)
+starting with 3 molecules of template DNA is ________.
+Two identical, infinite conducting plates are kept parallel to each other and are separated by a
+distance d. The uniform charge densities on the plates are +σ and -σ. The electric field at a point
+between the two plates is ݊ቀ
+஢
+கబቁ, where n is _______. 
+(0 is the permittivity of free space)
+6.5
+5.0
+4.0
+3.0
+kb
+The concentration of NaCl (in mM) formed at the stoichiometric equivalence point when 10 mL of
+0.1 M HCl solution is titrated with 0.2 M NaOH solution is ________. (as an integer)
+The standard emf of a cell (in V) involving the reaction, 2 Ag+ (aq.)  Ag (s) + Ag2+ (aq.) at 298 K
+is _________. [Correct to two decimal places]
+[Given: Ag+ (aq.) + e  Ag (s); Eo = 0.62 V and Ag2+ (aq.) + e  Ag+ (aq.); Eo = 0.12 V]
+Let ܽԦ ൌ4ଓ̂ െ2ଔ̂ ൅6݇෠ and ܾሬԦ ൌ7ଓ̂ ൅ଔ̂ െ12݇෠. If ܽԦ ൈܾሬԦ ൌߙଓ̂ ൅ߚଔ̂ ൅ߛ݇෠, then the value of ߙ൅ߚ൅
+ߛ equals_______.
+An infinitely long solenoid of radius r and number of turns per unit length n carries a steady current
+I. The ratio of the magnetic fields at a point on the axis of the solenoid to a point r/2 from the axis is
+_______.
+END OF THE QUESTION PAPER

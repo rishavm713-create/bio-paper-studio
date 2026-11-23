@@ -1,0 +1,55 @@
+{
+ "name": "Biotechnology (BSc level)",
+ "book": "standard BSc texts",
+ "text_dir": null,
+ "chapters": [
+  {
+   "name": "Cell Biology",
+   "group": "BSc level"
+  },
+  {
+   "name": "Molecular Biology",
+   "group": "BSc level"
+  },
+  {
+   "name": "Biochemistry",
+   "group": "BSc level"
+  },
+  {
+   "name": "Enzymes and Kinetics",
+   "group": "BSc level"
+  },
+  {
+   "name": "Genetics",
+   "group": "BSc level"
+  },
+  {
+   "name": "Microbiology",
+   "group": "BSc level"
+  },
+  {
+   "name": "Immunology",
+   "group": "BSc level"
+  },
+  {
+   "name": "Plant Physiology",
+   "group": "BSc level"
+  },
+  {
+   "name": "Animal Physiology",
+   "group": "BSc level"
+  },
+  {
+   "name": "Recombinant DNA and Biotech Techniques",
+   "group": "BSc level"
+  },
+  {
+   "name": "Ecology and Evolution",
+   "group": "BSc level"
+  },
+  {
+   "name": "Biostatistics and Numericals",
+   "group": "BSc level"
+  }
+ ]
+}

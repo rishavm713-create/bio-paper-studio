@@ -1,0 +1,8 @@
+references/raw/
+*.pdf
+.DS_Store
+__pycache__/
+note.txt
+download-log.txt
+handoffs/
+.claude/

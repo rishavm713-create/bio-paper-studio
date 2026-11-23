@@ -1,0 +1,132 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Bio Paper Studio</title>
+<style>
+:root{--bg:#0d1110;--card:#161c19;--ink:#e6ebe8;--mute:#8d9892;--line:#28302c;--acc:#3ccf8e;--acc2:#163126;--warn:#f79009;color-scheme:dark}
+*{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--ink);font:15px/1.45 -apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif}
+header{display:flex;align-items:center;gap:14px;padding:18px 28px;border-bottom:1px solid var(--line);background:var(--card)}
+header h1{font-size:19px;margin:0}header span{color:var(--mute);font-size:13px}
+.tabs{margin-left:auto;display:flex;gap:6px}.tabs button{border:1px solid var(--line);background:none;color:var(--ink);padding:7px 14px;border-radius:8px;cursor:pointer;font:inherit}
+.tabs button.on{background:var(--acc);border-color:var(--acc);color:#06130d}
+main{display:grid;grid-template-columns:minmax(0,1fr) 320px;gap:22px;padding:22px 28px;max-width:1240px;margin:auto}
+@media (max-width:900px){main{grid-template-columns:1fr;padding:16px}}
+.card{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:20px 22px;margin-bottom:18px}
+h2{font-size:13px;text-transform:uppercase;letter-spacing:.06em;color:var(--mute);margin:0 0 10px}
+.step{margin-bottom:22px}.row{display:flex;flex-wrap:wrap;gap:10px}
+.opt{border:1.5px solid var(--line);border-radius:11px;padding:11px 15px;cursor:pointer;background:var(--card);color:var(--ink);font:inherit;text-align:left;min-width:120px}
+.opt b{display:block;font-size:16px}.opt small{color:var(--mute)}
+.opt.on{border-color:var(--acc);background:var(--acc2)}
+.chips{display:flex;flex-wrap:wrap;gap:7px;max-height:230px;overflow:auto;padding:2px}
+.chip{border:1px solid var(--line);border-radius:999px;padding:5px 12px;cursor:pointer;font-size:13.5px;background:none;color:var(--ink)}
+.chip.on{background:var(--acc);border-color:var(--acc);color:#06130d}
+.grp{width:100%;font-size:12px;color:var(--mute);margin:6px 0 0}
+.num{display:flex;align-items:center;gap:10px}.num input{width:90px;font:inherit;font-size:18px;padding:8px 10px;border:1.5px solid var(--line);border-radius:10px;background:var(--card);color:var(--ink);text-align:center}
+.num button{width:38px;height:38px;border-radius:10px;border:1px solid var(--line);background:none;color:var(--ink);font-size:18px;cursor:pointer}
+textarea{width:100%;min-height:70px;font:inherit;padding:10px;border:1.5px solid var(--line);border-radius:10px;background:var(--card);color:var(--ink);resize:vertical}
+.go{background:var(--acc);color:#06130d;border:0;border-radius:12px;padding:14px 26px;font:inherit;font-size:16px;font-weight:600;cursor:pointer}
+.go:disabled{opacity:.5;cursor:default}
+.sum{color:var(--mute);font-size:14px;margin-left:14px}
+.check{display:flex;align-items:center;gap:8px;margin-top:10px;cursor:pointer}
+#prog{display:none}.bar{height:6px;background:var(--line);border-radius:9px;overflow:hidden;margin:8px 0 12px}.bar i{display:block;height:100%;width:30%;background:var(--acc);animation:sl 1.4s infinite ease-in-out}
+@keyframes sl{0%{margin-left:-30%}100%{margin-left:100%}}
+.log{font:12.5px ui-monospace,Menlo,monospace;color:var(--mute);max-height:160px;overflow:auto;white-space:pre-wrap}
+.files a,.paper a{display:inline-block;margin:6px 8px 0 0;padding:7px 12px;border-radius:9px;background:var(--acc2);color:var(--acc);text-decoration:none;font-weight:600;font-size:13.5px}
+.paper{padding:10px 0;border-bottom:1px solid var(--line)}.paper:last-child{border:0}.paper div{font-size:13.5px;word-break:break-all}.paper a{padding:3px 9px;font-size:12px;margin-top:4px}
+.drop{border:2px dashed var(--line);border-radius:12px;padding:26px;text-align:center;color:var(--mute);cursor:pointer}.drop.on{border-color:var(--acc);color:var(--acc)}
+table{border-collapse:collapse;width:100%;font-size:13.5px;margin-top:8px}td,th{border:1px solid var(--line);padding:6px 8px;text-align:left;vertical-align:top}th{background:var(--acc2)}
+.pt{display:inline-block;margin:0 6px 6px 0;padding:4px 10px;border-radius:8px;font-size:12.5px;border:1px solid var(--line);color:var(--mute)}.pt.writing,.pt.retrying{border-color:var(--acc);color:var(--acc)}.pt.done{background:var(--acc2);color:var(--acc);border-color:var(--acc2)}.pt.failed,.pt.short{color:var(--warn);border-color:var(--warn)}
+.err{color:var(--warn)}.hide{display:none}
+#lock{position:fixed;inset:0;background:var(--bg);z-index:99;display:flex;align-items:center;justify-content:center}
+#lock .box{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:28px;width:300px;text-align:center}
+#lock input{width:100%;font-size:22px;letter-spacing:6px;text-align:center;padding:10px;margin:14px 0;background:var(--bg);color:var(--ink);border:1px solid var(--line);border-radius:8px}
+#lock button{width:100%;padding:10px;border:0;border-radius:8px;background:var(--acc);color:#04140c;font-weight:700;cursor:pointer}
+</style></head><body><div id="lock"><form class="box" onsubmit="unlock(event)"><b id="lockT">Enter PIN</b><input id="pin" type="password" inputmode="numeric" maxlength="8" autocomplete="off" autofocus><button>Unlock</button><div id="lockE" class="err" style="margin-top:10px"></div><div id="lockN" style="margin-top:14px;font-style:italic;opacity:.8"></div></form></div>
+<header><h1>🧬 Bio Paper Studio</h1><span id="tagline">Mock tests, DPPs and proofreading</span>
+<div class="tabs"><button class="on" data-tab="make">Make a paper</button><button data-tab="proof">Proofread my paper</button></div></header>
+<main>
+<section>
+ <div id="make" class="card">
+  <div class="step"><h2>1 · Exam</h2><div class="row" id="exam"></div></div>
+  <div class="step"><h2>2 · Paper type</h2><div class="row" id="type"></div></div>
+  <div class="step"><h2>3 · Difficulty</h2><div class="row" id="level"></div></div>
+  <div class="step"><h2>4 · Number of questions</h2>
+   <div class="num"><button id="minus">−</button><input id="count" type="number" min="1" max="200"><button id="plus">+</button>
+   <span class="sum" id="countHint"></span></div></div>
+  <div class="step"><h2>5 · Chapters <span id="chapHint" style="text-transform:none;letter-spacing:0"></span></h2><div class="chips" id="chapters"></div></div>
+  <div class="step"><h2>6 · File</h2><div class="row" id="format"></div>
+   <label class="check"><input type="checkbox" id="student" checked> Also make a student copy (no answers)</label></div>
+  <div class="step"><h2>Your NCERT chapter (optional)</h2><div class="drop" id="srcDrop">Only if the built-in chapter is wrong, old or missing: drop your NCERT chapter PDF here and questions will follow it instead<input type="file" id="srcFile" class="hide" accept=".pdf,.txt,.md,.docx"></div></div>
+  <div class="step"><h2>7 · Anything else? (optional)</h2><textarea id="notes" placeholder="e.g. more assertion-reason questions, focus on diagrams-in-words, avoid Mendel"></textarea></div>
+  <button class="go" id="goMake">Make paper</button><span class="sum" id="summary"></span>
+ </div>
+ <div id="proof" class="card hide">
+  <h2>Upload her paper (PDF, Word, image or text)</h2>
+  <div class="drop" id="drop">Drop a file here or click to choose<input type="file" id="file" class="hide" accept=".pdf,.doc,.docx,.txt,.md,.png,.jpg,.jpeg,.tex,.json"></div>
+  <h2 style="margin-top:18px">…or paste it</h2><textarea id="paste" style="min-height:180px" placeholder="Paste questions, options and answer key"></textarea>
+  <p style="color:var(--mute);font-size:13.5px">Checks wrong answer keys, wrong facts, spelling and scientific names, format, repeats and balance. It only reports problems; it never rewrites her paper.</p>
+  <button class="go" id="goProof">Proofread</button>
+ </div>
+ <div id="prog" class="card"><h2 id="progTitle">Working…</h2><div class="bar" id="bar"><i></i></div>
+  <div id="parts"></div><div class="log" id="log"></div><div class="files" id="files"></div><div id="report"></div>
+  <div id="fb" class="hide" style="margin-top:16px"><b>What should change next time?</b> <small style="color:var(--mute)">Saved and followed in every future paper. Also put your own finished papers in the BioPapers/my-style folder: their style is copied.</small><textarea id="fbT" placeholder="e.g. shorter solutions, more assertion-reason, always write the NCERT page"></textarea><div class="files"><a href="#" onclick="sendFb(event)">Save for next time</a> <span id="fbM"></span></div></div></div>
+</section>
+<aside><div class="card"><h2>Recent papers</h2><div id="papers"><span style="color:var(--mute)">None yet</span></div></div></aside>
+</main>
+<script>
+let EX={};
+const S={exam:"",type:"Mock",level:"Mixed",count:90,chapters:[],format:"pdf"};
+const $=id=>document.getElementById(id);
+function opts(id,list,key,after){const el=$(id);el.innerHTML="";list.forEach(([v,b,s])=>{const x=document.createElement("button");x.className="opt"+(S[key]===v?" on":"");x.innerHTML=`<b>${b}</b><small>${s}</small>`;x.onclick=()=>{S[key]=v;opts(id,list,key,after);after&&after();render()};el.appendChild(x)})}
+function chapters(){const el=$("chapters");el.innerHTML="";const groups=(EX[S.exam]||{groups:[]}).groups;
+ groups.forEach(([g,l])=>{const h=document.createElement("div");h.className="grp";h.textContent=g;el.appendChild(h);l.forEach(c=>{const x=document.createElement("button");x.className="chip"+(S.chapters.includes(c)?" on":"");x.textContent=c;x.onclick=()=>{S.chapters=S.chapters.includes(c)?S.chapters.filter(y=>y!==c):[...S.chapters,c];chapters();render()};el.appendChild(x)})})}
+function defCount(){S.count=S.type==="Mock"?EX[S.exam].n:15;$("count").value=S.count}
+function render(){$("countHint").textContent=S.type==="Mock"?`Real ${S.exam} ${EX[S.exam].subject.toLowerCase()}: ${EX[S.exam].n} questions`:"DPP default: 15";
+ $("chapHint").textContent=S.type==="Mock"?"(leave empty for the whole syllabus)":"(pick at least one)";
+ const ch=S.chapters.length?S.chapters.length+" chapter"+(S.chapters.length>1?"s":""):"whole syllabus";
+ $("summary").textContent=`${S.exam} · ${S.type} · ${S.level} · ${S.count} Qs · ${ch}`;
+ $("goMake").disabled=S.type==="DPP"&&!S.chapters.length&&!SRC}
+async function all(){const l=await (await fetch("/api/exams")).json();EX={};l.forEach(e=>EX[e.name]=e);
+ S.exam=(l.find(e=>e.default)||l[0]).name;S.count=EX[S.exam].n;$("count").value=S.count;
+ $("tagline").textContent="Mock tests, DPPs and proofreading for "+l.map(e=>e.name).join(" · ");
+ opts("exam",Object.entries(EX).map(([k,v])=>[k,k,`${v.n} Qs · ${v.summary}`]),"exam",()=>{S.chapters=[];chapters();defCount()});
+ opts("type",[["Mock","Mock test","Full exam pattern"],["DPP","DPP","Chapter practice"]],"type",defCount);
+ opts("level",[["Easy","Easy","NCERT direct"],["Medium","Medium","Concept + apply"],["Hard","Hard","Tricky, multi-step"],["Mixed","Mixed","30 / 50 / 20"]],"level");
+ opts("format",[["pdf","PDF","Ready to print"],["tex","LaTeX","Edit in Overleaf"],["both","Both","PDF + .tex"]],"format");chapters();render()}
+$("count").oninput=e=>{S.count=Math.max(1,Math.min(200,+e.target.value||1));render()};
+$("minus").onclick=()=>{S.count=Math.max(1,S.count-5);$("count").value=S.count;render()};
+$("plus").onclick=()=>{S.count=Math.min(200,S.count+5);$("count").value=S.count;render()};
+document.querySelectorAll(".tabs button").forEach(b=>b.onclick=()=>{document.querySelectorAll(".tabs button").forEach(x=>x.classList.toggle("on",x===b));$("make").classList.toggle("hide",b.dataset.tab!=="make");$("proof").classList.toggle("hide",b.dataset.tab!=="proof")});
+let FILE=null;const drop=$("drop");drop.onclick=()=>$("file").click();
+$("file").onchange=e=>take(e.target.files[0]);drop.ondragover=e=>{e.preventDefault();drop.classList.add("on")};drop.ondragleave=()=>drop.classList.remove("on");
+drop.ondrop=e=>{e.preventDefault();drop.classList.remove("on");take(e.dataTransfer.files[0])};
+function take(f){if(!f)return;const r=new FileReader();r.onload=()=>{FILE={filename:f.name,filedata:r.result};drop.textContent="✓ "+f.name};r.readAsDataURL(f)}
+async function start(url,body,title){$("goMake").disabled=$("goProof").disabled=true;$("prog").style.display="block";$("progTitle").textContent=title;$("bar").style.display="block";$("log").textContent="";$("files").innerHTML="";$("report").innerHTML="";$("parts").innerHTML="";
+ const r=await fetch(url,{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify(body)});const j=await r.json();
+ if(!r.ok){done();$("log").innerHTML=`<span class="err">${j.error}</span>`;return}poll(j.id)}
+function done(){$("bar").style.display="none";$("goProof").disabled=false;render()}
+async function poll(id){const j=await (await fetch("/api/job/"+id)).json();const sec=Math.round(Date.now()/1000-j.start);
+ $("parts").innerHTML=j.parts.map(p=>`<span class="pt ${p.status}">${p.status==="done"?"✓ ":p.status==="writing"?"● ":""}${esc(p.label)}</span>`).join("");$("log").textContent=j.log.slice(-8).join("\n");$("log").scrollTop=1e9;
+ if(j.status==="running"){$("progTitle").textContent=`${j.stage}… ${Math.floor(sec/60)}m ${sec%60}s`;return setTimeout(()=>poll(id),2500)}
+ done();$("progTitle").textContent=j.status==="done"?"Done ✓":"Something went wrong";$("fb").classList.toggle("hide",j.status!=="done");$("fbM").textContent="";
+ $("files").innerHTML=j.files.map(f=>`<a href="/files/${encodeURIComponent(f)}" target="_blank">Open ${f}</a>`).join("");
+ if(j.kind==="proofread"||j.status!=="done")$("report").innerHTML=md(j.result);loadPapers()}
+function esc(s){return s.replace(/[&<>]/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;"}[c]))}
+function md(t){const L=esc(t||"").split("\n");let h="",tb=[];const flush=()=>{if(!tb.length)return;h+="<table>"+tb.filter(r=>!/^\|?\s*:?-{3,}/.test(r)).map((r,i)=>"<tr>"+r.replace(/^\||\|$/g,"").split("|").map(c=>i?`<td>${c.trim()}</td>`:`<th>${c.trim()}</th>`).join("")+"</tr>").join("")+"</table>";tb=[]};
+ L.forEach(l=>{if(l.trim().startsWith("|"))tb.push(l.trim());else{flush();if(l.trim()&&!/^FILE:/.test(l))h+=`<p>${l.replace(/\*\*(.+?)\*\*/g,"<b>$1</b>")}</p>`}});flush();return h}
+async function loadPapers(){const p=await (await fetch("/api/papers")).json();if(!p.length)return;
+ $("papers").innerHTML=p.map(x=>`<div class="paper"><div>${esc(x.name)}</div>${x.files.map(f=>`<a href="/files/${encodeURIComponent(f)}" target="_blank">${f.includes("-student")?"student ":""}${f.split(".").pop()}</a>`).join("")}</div>`).join("")}
+var SRC=null;const sd=$("srcDrop");sd.onclick=()=>$("srcFile").click();$("srcFile").onchange=e=>takeSrc(e.target.files[0]);
+sd.ondragover=e=>{e.preventDefault();sd.classList.add("on")};sd.ondragleave=()=>sd.classList.remove("on");
+sd.ondrop=e=>{e.preventDefault();sd.classList.remove("on");takeSrc(e.dataTransfer.files[0])};
+function takeSrc(f){if(!f)return;const r=new FileReader();r.onload=()=>{SRC={sourcename:f.name,sourcedata:r.result};sd.textContent="✓ "+f.name+" (questions will follow this file)";if(S.type==="DPP")$("goMake").disabled=false};r.readAsDataURL(f)}
+$("goMake").onclick=()=>start("/api/generate",{...S,...(SRC||{}),student:$("student").checked,notes:$("notes").value},`Making ${S.exam} ${S.type}…`);
+$("goProof").onclick=()=>start("/api/proofread",FILE||{text:$("paste").value},"Proofreading…");
+function pickFile(drop,input,set){drop.onclick=()=>input.click();input.onchange=e=>set(e.target.files[0]);drop.ondragover=e=>{e.preventDefault();drop.classList.add("on")};drop.ondragleave=()=>drop.classList.remove("on");drop.ondrop=e=>{e.preventDefault();drop.classList.remove("on");set(e.dataTransfer.files[0])}}
+all().then(()=>{defCount();render()});
+async function auth(){const a=await (await fetch("/api/auth")).json();if(a.note)$("lockN").textContent=a.note;if(a.ok){$("lock").remove();loadPapers();return}
+ if(!a.set)$("lockT").textContent="Set a PIN (4-8 digits) - only you will know it"}
+async function sendFb(e){e.preventDefault();const t=$("fbT").value.trim();if(!t)return;const r=await fetch("/api/feedback",{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify({text:t})});$("fbM").textContent=r.ok?"Saved ✓ – next papers will follow this":"Could not save";if(r.ok)$("fbT").value=""}
+async function unlock(e){e.preventDefault();const r=await fetch("/api/login",{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify({pin:$("pin").value})});
+ if(r.ok){$("lock").remove();loadPapers()}else{$("lockE").textContent=(await r.json()).error;$("pin").value=""}}
+auth();
+</script></body></html>

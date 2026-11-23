@@ -1,0 +1,59 @@
+{
+ "name": "IAT",
+ "full_name": "IISER Aptitude Test (IAT), biology part",
+ "order": 1,
+ "subject_label": "Biology",
+ "summary": "+4 / −1",
+ "subjects": [
+  "biology"
+ ],
+ "sections": [
+  {
+   "name": "Biology",
+   "type": "MCQ",
+   "marks": 4,
+   "count": 15
+  }
+ ],
+ "time": "45 min",
+ "marking": "+4 for correct, −1 for wrong, 0 for unattempted",
+ "chapter_groups": [
+  {
+   "subject": "biology"
+  }
+ ],
+ "pool": [
+  {
+   "subject": "biology",
+   "group": "Class 11",
+   "tag": "botany"
+  },
+  {
+   "subject": "biology",
+   "group": "Class 11",
+   "tag": "zoology"
+  },
+  {
+   "subject": "biology",
+   "group": "Class 12",
+   "tag": "botany"
+  },
+  {
+   "subject": "biology",
+   "group": "Class 12",
+   "tag": "zoology"
+  }
+ ],
+ "dpp_keep_sections": false,
+ "marks_in_label": false,
+ "minutes_per_question": 1.1,
+ "papers_prefix": "iat",
+ "profile": "profiles/iat.md",
+ "style": "NCERT 11-12 level, but conceptual and application-based, with some data and experiment questions.",
+ "weightage": "See the profile file (profiles/iat.md)",
+ "difficulty": "1-5 rubric in the profile file",
+ "sources": [
+  "https://www.iiseradmission.in/assets/pdfs/English-Key_IAT-2025.pdf",
+  "https://www.iiseradmission.in/assets/pdfs/English_Key_IAT%202026_final.pdf"
+ ]
+}

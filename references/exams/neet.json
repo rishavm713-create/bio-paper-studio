@@ -1,0 +1,77 @@
+{
+ "name": "NEET",
+ "full_name": "NEET (UG), biology part",
+ "order": 4,
+ "subject_label": "Biology",
+ "summary": "+4 / −1",
+ "subjects": [
+  "biology"
+ ],
+ "sections": [
+  {
+   "name": "Botany",
+   "type": "MCQ",
+   "marks": 4,
+   "count": 45,
+   "pool": [
+    {
+     "subject": "biology",
+     "tag": "botany"
+    }
+   ]
+  },
+  {
+   "name": "Zoology",
+   "type": "MCQ",
+   "marks": 4,
+   "count": 45,
+   "pool": [
+    {
+     "subject": "biology",
+     "tag": "zoology"
+    }
+   ]
+  }
+ ],
+ "time": "90 min",
+ "marking": "+4 for correct, −1 for wrong, 0 for unattempted",
+ "chapter_groups": [
+  {
+   "subject": "biology"
+  }
+ ],
+ "pool": [
+  {
+   "subject": "biology",
+   "group": "Class 11",
+   "tag": "botany"
+  },
+  {
+   "subject": "biology",
+   "group": "Class 11",
+   "tag": "zoology"
+  },
+  {
+   "subject": "biology",
+   "group": "Class 12",
+   "tag": "botany"
+  },
+  {
+   "subject": "biology",
+   "group": "Class 12",
+   "tag": "zoology"
+  }
+ ],
+ "dpp_keep_sections": false,
+ "marks_in_label": false,
+ "minutes_per_question": 1.1,
+ "papers_prefix": "neet",
+ "profile": "profiles/neet.md",
+ "style": "NCERT Class 11 and 12 biology, word for word NCERT facts. Include assertion-reason, statement I/II, match-the-column and \"how many of the following are correct\" items, as recent NEET papers do.",
+ "weightage": "Follow NCERT chapter weight; no profile file yet",
+ "difficulty": "Mixed = 30% easy, 50% medium, 20% hard",
+ "sources": [
+  "https://cdnbbsr.s3waas.gov.in/s37bc1ec1d9c3426357e69acd5bf320061/uploads/2022/02/2022021555.pdf"
+ ],
+ "default": true
+}
