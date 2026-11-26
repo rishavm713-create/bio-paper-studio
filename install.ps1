@@ -43,11 +43,14 @@ if (-not $Src -or -not (Test-Path (Join-Path $Src "skill\bio-paper\render.py")))
 }
 New-Item -ItemType Directory -Force $Skill, (Join-Path $env:USERPROFILE "BioPapers") | Out-Null
 Copy-Item (Join-Path $Src "skill\bio-paper\*") $Skill -Recurse -Force          # keeps your own extra references
-Copy-Item (Join-Path $Src "references") $Skill -Recurse -Force
+$Refs = Join-Path $Skill "references"
+New-Item -ItemType Directory -Force $Refs | Out-Null
+Get-ChildItem (Join-Path $Src "references") | Where-Object { $_.Name -notin "ncert", "papers" } |   # these come from the official sites (step 4)
+    Copy-Item -Destination $Refs -Recurse -Force
 $Note = Join-Path $Src "note.txt"
 if (Test-Path $Note) { $Cfg = Join-Path $env:USERPROFILE ".config\bio-paper"; New-Item -ItemType Directory -Force $Cfg | Out-Null; Copy-Item $Note $Cfg -Force }
 
-Say "4/5 References (shipped as text; any missing ones download in the background)"
+Say "4/5 References (downloading from the official websites in the background)"
 $Get = Join-Path $Skill "references\get_references.py"
 $PArgs = @($Py[1..9]) + @("`"$Get`"")
 Start-Process -WindowStyle Hidden -FilePath $Py[0] -ArgumentList $PArgs -RedirectStandardOutput (Join-Path $Skill "references\download-log.txt")

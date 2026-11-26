@@ -28,11 +28,13 @@ if [ ! -f "$SRC/skill/bio-paper/render.py" ]; then
 fi
 mkdir -p "$SKILL" "$HOME/BioPapers"
 cp -R "$SRC/skill/bio-paper/." "$SKILL/"       # keeps your own extra references
-cp -R "$SRC/references" "$SKILL/"
+mkdir -p "$SKILL/references"
+for f in "$SRC/references/"*; do               # NCERT and past papers come from the official sites (step 4)
+  case "${f##*/}" in ncert|papers) ;; *) cp -R "$f" "$SKILL/references/" ;; esac
+done
 [ -f "$SRC/note.txt" ] && mkdir -p "$HOME/.config/bio-paper" && cp "$SRC/note.txt" "$HOME/.config/bio-paper/note.txt"
-[ -f "$SRC/references-pdfs.zip" ] && unzip -qo "$SRC/references-pdfs.zip" -d "$SKILL/references/"
 
-say "4/5 References (shipped as text; any missing ones download in the background)"
+say "4/5 References (downloading from the official websites in the background)"
 python3 "$SKILL/references/get_references.py" > "$SKILL/references/download-log.txt" 2>&1 &
 
 say "5/5 Desktop shortcut"

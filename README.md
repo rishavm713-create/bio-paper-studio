@@ -35,40 +35,52 @@ Roughly **80-90% of the routine work** of a biology content writer is done for y
 
 ## Install (one step)
 
-### Windows 10 / 11
+You need **Claude Code** with a Claude account. Open it, then paste the line for your computer and press **Enter**. When it asks to run the command, allow it. (This does not work in the claude.ai chat, which cannot install apps. This method works only with Claude.)
 
-1. Press **Start**, type **PowerShell** and open it.
-2. Paste this line and press **Enter**:
+### Windows
+
+```text
+Install Bio Paper Studio on this Windows computer by running this in PowerShell: irm https://raw.githubusercontent.com/rishavm713-create/bio-paper-studio/main/install.ps1 | iex
+```
+
+### Mac
+
+```text
+Install Bio Paper Studio on this Mac by running this command: curl -fsSL https://raw.githubusercontent.com/rishavm713-create/bio-paper-studio/main/install.sh | bash
+```
+
+<details>
+<summary>No Claude Code yet? Install from the terminal instead</summary>
+
+**Windows:** press **Start**, type **PowerShell**, open it, paste this line and press **Enter**:
 
 ```powershell
 irm https://raw.githubusercontent.com/rishavm713-create/bio-paper-studio/main/install.ps1 | iex
 ```
 
-### Mac
-
-1. Press **Cmd + Space**, type **Terminal** and open it.
-2. Paste this line and press **Enter**:
+**Mac:** press **Cmd + Space**, type **Terminal**, open it, paste this line and press **Enter**:
 
 ```bash
 curl -fsSL https://raw.githubusercontent.com/rishavm713-create/bio-paper-studio/main/install.sh | bash
 ```
 
-The installer takes about a minute. It:
+</details>
+
+The installer:
 
 - installs Python and Claude Code if you don't have them,
 - installs the app, with NCERT Biology and past papers already included,
 - puts a **Bio Paper Studio** icon on your Desktop.
 
-**First time only:** type `claude` in the same window and sign in with your Claude account. Then double-click **Bio Paper Studio** on the Desktop. (Mac, first time: right-click the icon, then **Open**, then **Open**.)
+**First time only:** if you have not signed in yet, open Terminal (Windows: PowerShell), type `claude` and sign in with your Claude account. Then double-click **Bio Paper Studio** on the Desktop. (Mac, first time: right-click the icon, then **Open**, then **Open**.)
 
 ### Prefer a download?
 
 | What | Link |
 |---|---|
 | App (Windows + Mac, ~2 MB) | **[Download BioPaperStudio.zip](https://github.com/rishavm713-create/bio-paper-studio/releases/latest/download/BioPaperStudio.zip)** |
-| Original PDFs of the references (optional, ~270 MB) | [references-pdfs.zip](https://github.com/rishavm713-create/bio-paper-studio/releases/latest/download/references-pdfs.zip) |
 
-Unzip it, then double-click **Install Bio Paper Studio (Windows).bat** on Windows, or **Install Bio Paper Studio.command** on Mac. If you put `references-pdfs.zip` in the same folder first, the Mac installer adds the PDFs too. You don't need the PDFs: the text versions are already in the app.
+Unzip it, then double-click **Install Bio Paper Studio (Windows).bat** on Windows, or **Install Bio Paper Studio.command** on Mac.
 
 ---
 
@@ -87,7 +99,7 @@ The app opens in your browser at `http://127.0.0.1:8765`. That address works onl
 
 **Proofread your own paper**
 
-Upload your paper (PDF, Word, image or pasted text) and press **Proofread**. You get a table of problems, with the costly ones first:
+Upload your paper (PDF, Word `.docx`, image or pasted text) and press **Proofread**. You get a table of problems, with the costly ones first:
 
 - **Answer-key errors.** A key is marked **Confirmed** only when two separate checks agree. If only one check finds it, it is marked **Check** for you to look at.
 - **Wrong facts.** Checked against NCERT 2026-27.
@@ -118,13 +130,13 @@ You can also ask Claude Code directly, for example: *"make a NEET DPP on Cell Cy
   - Automatic checks catch missing keys, duplicate questions and options, bad numeric answers, and answer letters bunched on one option.
 - **Real diagrams.** Pedigrees, graphs, bar charts, plasmid maps and data tables are drawn from data. So the picture and the answer always agree, in both the PDF and the LaTeX.
 - **Fast.** Big papers are written by up to 6 writers in parallel.
-- **References included** (in `references/`):
+- **References** (NCERT and past papers are downloaded from the official websites; the rest come with the app):
   - NCERT Biology Class 11 and 12 (2026-27).
   - Past papers: IIT JAM BT 2012-2026, NEST 2017-2026, IAT 2025-2026.
   - Exam profiles with topic weightage and difficulty.
   - One pattern file per exam in `references/exams/` and one chapter list per subject in `references/subjects/`.
 
-  All of it comes from the official websites, listed with their links in [`references/sources.json`](references/sources.json). Any reference that is missing downloads in the background, so you can start your first paper straight away.
+  The NCERT chapters and past papers download in the background after installing, from the links in [`references/sources.json`](references/sources.json). This needs an internet connection. `download-log.txt` in the installed `references` folder shows what has finished; wait for that before your first paper.
 
 ---
 
@@ -166,7 +178,7 @@ No code changes: the app builds its exam list, subjects and chapters from data f
 
 ```
 skill/bio-paper/      the app: SKILL.md (Claude's instructions), render.py (PDF/LaTeX), figures.py (diagrams), app/ (web app)
-references/           NCERT and past-paper text, exam profiles, sources.json, get_references.py (re-downloads from official sites)
+references/           exam profiles, subject lists, sources.json, get_references.py (downloads NCERT and past papers from official sites)
 install.ps1 / .sh     one-step installers
 ```
 
@@ -182,7 +194,7 @@ Co-created by Rishav Mishra and Anuva.
 
 ## License
 
-The code is under the MIT License (see [LICENSE](LICENSE)). The files in `references/` belong to their owners (NCERT, IITs, IISERs and NTA). They are included only for personal study and are not covered by the MIT License.
+The code is under the MIT License (see [LICENSE](LICENSE)). NCERT chapters and past papers belong to their owners (NCERT, IITs, IISERs, NISER and NTA). Use them only for personal study. They are not covered by the MIT License.
 
 ---
 

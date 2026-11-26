@@ -1,22 +1,21 @@
 """Download NCERT Biology chapters and past exam papers from their official websites,
-onto your own computer, for your own study use. Nothing copyrighted is stored in this repo.
+onto your own computer, for your own study use. The files belong to their owners.
 
-    python get_references.py            # into ~/.claude/skills/paper-studio/references
+    python get_references.py            # into the folder this script is in
     python get_references.py <folder>   # somewhere else
 
 Each source in sources.json is saved as .pdf; if `pypdf` is installed, the text is also saved as .md
 (the app reads either). Files you already have are skipped, so you can re-run it any time.
 """
-import json, os, sys, time, urllib.request
+import json, os, subprocess, sys, time, urllib.request
 
 HERE = os.path.dirname(os.path.abspath(__file__))
-DEST = sys.argv[1] if len(sys.argv) > 1 else os.path.join(os.path.expanduser("~"), ".claude", "skills", "bio-paper", "references")
+DEST = sys.argv[1] if len(sys.argv) > 1 else HERE
 UA = "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/130 Safari/537.36"
 
 try:
     from pypdf import PdfReader
 except ImportError:  # optional: lets text PDFs become .md text
-    import subprocess
     subprocess.call([sys.executable, "-m", "pip", "install", "--user", "--quiet", "pypdf"],
                     stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL)
     try:
@@ -28,9 +27,17 @@ except ImportError:  # optional: lets text PDFs become .md text
 
 
 def fetch(url, path):
-    req = urllib.request.Request(url, headers={"User-Agent": UA, "Referer": url.rsplit("/", 1)[0] + "/"})
-    with urllib.request.urlopen(req, timeout=60) as r:
-        data = r.read()
+    referer = url.rsplit("/", 1)[0] + "/"
+    req = urllib.request.Request(url, headers={"User-Agent": UA, "Referer": referer})
+    try:
+        with urllib.request.urlopen(req, timeout=60) as r:
+            data = r.read()
+    except OSError as e:
+        if "CERTIFICATE_VERIFY_FAILED" not in str(e):
+            raise
+        # Some Python installs cannot verify these sites. curl checks them against the system's certificates.
+        data = subprocess.run(["curl", "-fsS", "--proto", "=https", "--max-time", "120", "-A", UA, "-e", referer, url],
+                              capture_output=True, check=True).stdout
     if not data.startswith(b"%PDF"):
         raise ValueError("the site did not send a PDF")
     with open(path, "wb") as f:
