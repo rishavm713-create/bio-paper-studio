@@ -174,6 +174,12 @@ install.ps1 / .sh     one-step installers
 
 NEET biology mock test generator, NEET DPP generator, IIT JAM Biotechnology mock test, IISER IAT biology practice, NISER NEST biology questions, NCERT biology MCQ generator, AI question paper generator, biology question paper proofreader, answer key checker, biology DPP PDF, LaTeX question paper, Overleaf biology paper, free test series maker for teachers, coaching institute content tool, Claude Code skill.
 
+## Credits
+
+Co-created by Rishav Mishra and Anuva.
+
+---
+
 ## License
 
 The code is under the MIT License (see [LICENSE](LICENSE)). The files in `references/` belong to their owners (NCERT, IITs, IISERs and NTA). They are included only for personal study and are not covered by the MIT License.
