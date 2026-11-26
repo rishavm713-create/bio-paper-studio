@@ -4,8 +4,10 @@ Run: python3 ~/.claude/skills/paper-studio/app/server.py   (opens http://127.0.0
 Only listens on this computer. Papers are written to ~/BioPapers.
 Big papers are written by several Claude Code writers in parallel, then one reviewer checks and renders.
 """
-import base64, hashlib, hmac, json, secrets, sys, os, random, re, shutil, subprocess, threading, time, uuid, webbrowser
+import base64, hashlib, hmac, io, json, secrets, sys, os, random, re, shutil, subprocess, tempfile, threading, time, uuid, webbrowser, zipfile
+import xml.etree.ElementTree as ET
 from concurrent.futures import ThreadPoolExecutor
+from contextlib import contextmanager
 from http.server import ThreadingHTTPServer, BaseHTTPRequestHandler
 from urllib.parse import unquote
 
@@ -288,18 +290,134 @@ def teacher_notes():
     return ("\n\n" + "\n\n".join(out)) if out else ""
 
 
-def run_claude(job, prompt, tools, tag):
+UPDATE_MSG = ("Your Claude Code is too old to run Bio Paper Studio safely. Update Claude Code (run  claude update  in "
+              "Terminal or PowerShell), then try again.")
+RESTRICTED = False
+MAX_BYTES = 20_000_000  # largest .docx text or model output the app will read
+
+
+def has_restricted():
+    """The safety flags need a recent Claude Code; without them no job runs."""
+    global RESTRICTED
+    if not RESTRICTED:
+        try:
+            r = subprocess.run([CLAUDE, "--help"], env=clean_env(), capture_output=True, text=True,
+                               encoding="utf-8", errors="replace", timeout=60)
+            RESTRICTED = "--restricted" in r.stdout
+        except (OSError, subprocess.TimeoutExpired):
+            return False
+    return RESTRICTED
+
+
+@contextmanager
+def scratch_dir():
+    """A fresh work folder for one Claude call: the only place that call can write."""
+    d = os.path.realpath(tempfile.mkdtemp(prefix="bps-"))
+    try:
+        yield d
+    finally:
+        shutil.rmtree(d, ignore_errors=True)
+
+
+def read_output(path):
+    """Text of the one file a call was asked to write, or None."""
+    if os.path.islink(path) or not os.path.isfile(path) or os.path.getsize(path) > MAX_BYTES:
+        return None
+    with open(path, encoding="utf-8", errors="replace") as f:
+        return f.read()
+
+
+def read_json(path):
+    t = read_output(path)
+    if t is None:
+        raise OSError("no output")
+    return json.loads(t)
+
+
+def write_json(path, data):
+    with open(path, "w", encoding="utf-8") as f:
+        json.dump(data, f, ensure_ascii=False, indent=1)
+
+
+def docx_text(data):
+    """Plain text of a .docx (italics as *x*, super/subscript as ^{x} _{x}): the model has no Python to open it."""
+    W = "{http://schemas.openxmlformats.org/wordprocessingml/2006/main}"
+    M = "{http://schemas.openxmlformats.org/officeDocument/2006/math}"
+    try:
+        with zipfile.ZipFile(io.BytesIO(data)) as z, z.open("word/document.xml") as f:
+            xml = f.read(MAX_BYTES + 1)
+        if len(xml) > MAX_BYTES:
+            raise ValueError
+        head = xml.decode("utf-8-sig")
+        if "<!DOCTYPE" in head or "<!ENTITY" in head:
+            raise ValueError
+        root = ET.fromstring(xml)
+    except (zipfile.BadZipFile, KeyError, ValueError, ET.ParseError, RuntimeError, NotImplementedError, OSError):
+        raise ValueError("Could not read this Word file. Save it as PDF and try again.")
+    lines = []
+    for para in root.iter(W + "p"):
+        bits = []  # [style, text]
+        for run in (e for e in para.iter() if e.tag in (W + "r", M + "r")):
+            text = "".join((e.text or "") if e.tag in (W + "t", M + "t") else
+                           "\t" if e.tag == W + "tab" else "\n" if e.tag == W + "br" else "" for e in run)
+            pr = run.find(W + "rPr")
+            it = pr.find(W + "i") if pr is not None else None
+            va = pr.find(W + "vertAlign") if pr is not None else None
+            style = (it is not None and it.get(W + "val") not in ("0", "false", "off"),
+                     {"superscript": "^", "subscript": "_"}.get(va.get(W + "val")) if va is not None else None)
+            if bits and bits[-1][0] == style:
+                bits[-1][1] += text
+            elif text:
+                bits.append([style, text])
+        line = ""
+        for (ital, va), text in bits:
+            if va:
+                text = va + "{" + text + "}"
+            if ital and text.strip():
+                text = text.replace(text.strip(), "*" + text.strip() + "*", 1)
+            line += text
+        if para.find(f"{W}pPr/{W}numPr") is not None:
+            line = "#. " + line
+        lines.append(line)
+    if not any(x.strip() for x in lines):
+        raise ValueError("No text found in this Word file. Save it as PDF and try again.")
+    return ("(Text extracted from a Word file. *x* = italics. #. = a list item whose automatic number or letter is "
+            "not shown, so do not report numbering for these. Pictures are missing.)\n\n" + "\n".join(lines))
+
+
+def save_upload(data, name, prefix):
+    """Save an uploaded file to the inbox; .docx is turned into text. Raises ValueError with a message for the user."""
+    name = re.sub(r"[^\w.\-]", "_", os.path.basename(str(name)))[-80:]
+    raw = base64.b64decode(str(data).split(",")[-1])
+    if name.lower().endswith(".doc"):
+        raise ValueError("Old .doc files cannot be read. Save it as .docx or PDF and try again.")
+    if name.lower().endswith(".docx"):
+        raw, name = docx_text(raw).encode("utf-8"), name + ".txt"
+    os.makedirs(INBOX, exist_ok=True)
+    path = os.path.join(INBOX, time.strftime(prefix + "%H%M%S-") + name)
+    with open(path, "wb") as f:
+        f.write(raw)
+    return path
+
+
+def run_claude(job, prompt, scratch, tag):
+    """One Claude Code call: no shell, reads the skill and references, writes only inside `scratch`."""
+    read = [SKILL, REFS]
     if tag.startswith(LEARN_TAGS):
         prompt += teacher_notes()
+        if os.path.isdir(MY_STYLE) and MY_STYLE in prompt:
+            read.append(MY_STYLE)
     env = clean_env()
     if os.environ.get("ANTHROPIC_API_KEY"):
         env["ANTHROPIC_API_KEY"] = os.environ["ANTHROPIC_API_KEY"]
     env["PYTHONIOENCODING"] = "utf-8"
     cmd = [CLAUDE, "-p", "--model", MODEL, "--output-format", "stream-json", "--verbose",
-           "--permission-mode", "acceptEdits", "--no-session-persistence", "--disable-slash-commands", "--allowedTools", tools, "--add-dir", OUT, SKILL]
+           "--restricted", "--strict-mcp-config", "--tools", "Read,Write,Edit,Glob,Grep", "--permission-mode", "dontAsk",
+           "--allowedTools", "Edit(./**)", "--no-session-persistence", "--disable-slash-commands",
+           "--add-dir", *dict.fromkeys(os.path.realpath(r) for r in read)]  # takes several values: keep it last
     result = ""
     try:
-        p = subprocess.Popen(cmd, cwd=OUT, env=env, stdin=subprocess.PIPE, stdout=subprocess.PIPE,
+        p = subprocess.Popen(cmd, cwd=scratch, env=env, stdin=subprocess.PIPE, stdout=subprocess.PIPE,
                              stderr=subprocess.STDOUT, text=True, encoding="utf-8", errors="replace")
         p.stdin.write(prompt)
         p.stdin.close()
@@ -324,8 +442,7 @@ def run_claude(job, prompt, tools, tag):
 
 def load_part(path, p):
     try:
-        with open(path, encoding="utf-8") as f:
-            qs = json.load(f)["questions"]
+        qs = read_json(path)["questions"]
         return [q for q in qs if isinstance(q, dict) and q.get("q")]
     except (OSError, ValueError, KeyError, TypeError):
         return []
@@ -350,16 +467,18 @@ def generate(jid, d):
     job = JOBS[jid]
     parts = plan(d)
     job["parts"] = [{"label": p["label"], "status": "waiting"} for p in parts]
-    work = os.path.join(OUT, ".parts", jid)
-    os.makedirs(work, exist_ok=True)
 
     def write(i):
         p, js = parts[i], job["parts"][i]
-        path = os.path.join(work, f"part{p['id']}.json")
         for attempt in range(2):
             js["status"] = "writing" if attempt == 0 else "retrying"
-            run_claude(job, writer_prompt(d, p, path), "Read Write Glob Grep", f"part {p['id']}")
-            qs = load_part(path, p)
+            with scratch_dir() as s:
+                dd = dict(d)
+                if d.get("source"):
+                    dd["source"] = shutil.copy(d["source"], s)
+                path = os.path.join(s, f"part{p['id']}.json")
+                run_claude(job, writer_prompt(dd, p, path), s, f"part {p['id']}")
+                qs = load_part(path, p)
             if len(qs) >= p["n"]:
                 js["status"] = "done"
                 return qs[:p["n"]]
@@ -413,25 +532,38 @@ def generate(jid, d):
             n += 1
             keys[str(n)] = q.pop("answer", "")
             q.pop("solution", None)
-    bpath, bans = os.path.join(work, "blind.json"), os.path.join(work, "blind-answers.json")
-    with open(bpath, "w", encoding="utf-8") as f:
-        json.dump(blind, f, ensure_ascii=False, indent=1)
-    rc, _ = run_claude(job, blind_prompt(f"The paper is {bpath} (questions are numbered in order from 1).", bans),
-                       "Read Write Glob Grep", "blind")
-    job["parts"][-1]["status"] = "done" if rc == 0 else "failed"
-    try:
-        with open(bans, encoding="utf-8") as f:
-            for qn, k, m in compare(keys, json.load(f)):
+    with scratch_dir() as s:
+        bpath, bans = os.path.join(s, "blind.json"), os.path.join(s, "blind-answers.json")
+        write_json(bpath, blind)
+        rc, _ = run_claude(job, blind_prompt(f"The paper is {bpath} (questions are numbered in order from 1).", bans),
+                           s, "blind")
+        job["parts"][-1]["status"] = "done" if rc == 0 else "failed"
+        try:
+            for qn, k, m in compare(keys, read_json(bans)):
                 warns.append(f"Q{qn}: blind solver answered {m} but the key says {k}. Re-solve it: fix the key, "
                              "or rewrite the question so only one answer is right")
-    except (OSError, ValueError):
-        warns.append("blind solve did not finish: check every key yourself")
+        except (OSError, ValueError, AttributeError):
+            warns.append("blind solve did not finish: check every key yourself")
 
     job["stage"] = "Checking every question and making the files"
     job["parts"].append({"label": "Reviewer", "status": "writing"})
-    rc, res = run_claude(job, reviewer_prompt(d, path, warns, short, d["format"], d["student"]),
-                         "Read Write Edit Glob Grep", "review")
-    job["parts"][-1]["status"] = "done" if rc == 0 else "failed"
+    with scratch_dir() as s:
+        copy = shutil.copy(path, s)
+        dd = dict(d)
+        if d.get("source"):
+            dd["source"] = shutil.copy(d["source"], s)
+        rc, res = run_claude(job, reviewer_prompt(dd, copy, warns, short, d["format"], d["student"]), s, "review")
+        job["parts"][-1]["status"] = "done" if rc == 0 else "failed"
+        try:  # keep the app's own paper unless the edited questions are complete and renderable
+            fixed = dict(paper, sections=read_json(copy)["sections"])
+            if sum(len(x["questions"]) for x in fixed["sections"]) < sum(len(x["questions"]) for x in paper["sections"]):
+                raise ValueError("questions missing")
+            render.check(fixed)
+            render.build(fixed)
+            write_json(path, fixed)
+        except Exception as err:  # any malformed model JSON
+            job["log"].append(f"[review] edited paper rejected ({type(err).__name__}); kept the unreviewed one")
+            res = (res or "") + "\n\nThe reviewer's file was not usable, so this paper is unreviewed: check it yourself."
     base = os.path.splitext(path)[0]
     for extra in ([f"--format={d['format']}"], ["--no-key"] if d["student"] else None):
         if extra:
@@ -441,7 +573,6 @@ def generate(jid, d):
             if left and extra[0] != "--no-key":
                 res = (res or "") + "\n\nStill flagged by the checker: " + "; ".join(left[:8])
     files = outputs(base, d["format"], d["student"])
-    shutil.rmtree(work, ignore_errors=True)
     job.update(files=files, result=res, status="done" if files else "error",
                stage="Done" if files else "Could not make the files")
 
@@ -454,7 +585,6 @@ def load_render():
     return m
 
 
-PR_TOOLS = "Read Write Glob Grep Bash(python3:*) Bash(python:*) Bash(py:*)"
 TYPE_RANK = {"key": 0, "fact": 1, "repeat": 2, "format": 3, "spelling": 4, "language": 5}
 
 
@@ -483,33 +613,33 @@ def chunk_prompt(src, cpath, out, allq):
             "Leave out questions with no problem. Save [] if all are fine. Reply with one line.")
 
 
+def paper_source(path, text, scratch):
+    if path:
+        return f"Her paper is the file {shutil.copy(path, scratch)}."
+    return "Her paper is pasted below.\n\n" + text
+
+
 def proofread(jid, d):
     job = JOBS[jid]
-    path = None
-    if d.get("filedata"):
-        os.makedirs(INBOX, exist_ok=True)
-        name = re.sub(r"[^\w.\-]", "_", os.path.basename(d.get("filename", "paper")))[:80]
-        path = os.path.join(INBOX, time.strftime("%H%M%S-") + name)
-        with open(path, "wb") as f:
-            f.write(base64.b64decode(d["filedata"].split(",")[-1]))
+    path = d.get("path")
+    text = "" if path else d["text"][:60000]
     report = os.path.join(OUT, f"proofread-{time.strftime('%Y-%m-%d-%H%M%S')}.md")
-    src = f"Her paper is the file {path}." if path else "Her paper is pasted below.\n\n" + d["text"][:60000]
-    work = os.path.join(OUT, ".parts", jid)
-    os.makedirs(work, exist_ok=True)
 
     # 1. exact copy of her paper as JSON
     job["stage"] = "Reading her paper question by question"
     job["parts"] = [{"label": "Reader", "status": "writing"}]
-    xpath = os.path.join(work, "paper.json")
-    rc, _ = run_claude(job, extract_prompt(src, xpath), PR_TOOLS, "read")
-    try:
-        with open(xpath, encoding="utf-8") as f:
-            paper = json.load(f)
-        qs = [q for s_ in paper["sections"] for q in s_["questions"]]
-        assert qs
-    except (OSError, ValueError, KeyError, TypeError, AssertionError):
+    with scratch_dir() as s:
+        xpath = os.path.join(s, "paper.json")
+        run_claude(job, extract_prompt(paper_source(path, text, s), xpath), s, "read")
+        try:
+            paper = read_json(xpath)
+            qs = [q for s_ in paper["sections"] for q in s_["questions"]]
+            assert qs
+        except (OSError, ValueError, KeyError, TypeError, AssertionError):
+            qs = None
+    if not qs:
         job["parts"][0]["status"] = "failed"
-        return proofread_single(job, src, report, work)
+        return proofread_single(job, path, text, report)
     job["parts"][0]["status"] = "done"
     for i, q in enumerate(qs, 1):
         q["no"] = str(q.get("no") or i)
@@ -542,21 +672,30 @@ def proofread(jid, d):
             keys[str(q.get("no"))] = q.pop("answer", "")
             q.pop("solution", None)
     keys = {k: v for k, v in keys.items() if str(v).strip()}
-    bpath, bans = os.path.join(work, "blind.json"), os.path.join(work, "blind-answers.json")
-    with open(bpath, "w", encoding="utf-8") as f:
-        json.dump(blind, f, ensure_ascii=False, indent=1)
+    found = {}  # output name -> parsed JSON, kept after each scratch folder is gone
+
+    def keep(name, out):
+        try:
+            found[name] = read_json(out)
+        except (OSError, ValueError):
+            pass
 
     def chunk(i, c):
-        cpath, out = os.path.join(work, f"chunk{i}.json"), os.path.join(work, f"rows{i}.json")
-        with open(cpath, "w", encoding="utf-8") as f:
-            json.dump(c, f, ensure_ascii=False, indent=1)
-        r, _ = run_claude(job, chunk_prompt(src, cpath, out, allq), PR_TOOLS, f"proof{i + 1}")
-        job["parts"][i + 1]["status"] = "done" if r == 0 and os.path.exists(out) else "failed"
+        with scratch_dir() as s:
+            cpath, out = os.path.join(s, f"chunk{i}.json"), os.path.join(s, f"rows{i}.json")
+            write_json(cpath, c)
+            r, _ = run_claude(job, chunk_prompt(paper_source(path, text, s), cpath, out, allq), s, f"proof{i + 1}")
+            keep(i, out)
+        job["parts"][i + 1]["status"] = "done" if r == 0 and i in found else "failed"
 
     def solve():
-        r, _ = run_claude(job, blind_prompt(f'The paper is {bpath}; use each question\'s "no" as its number.', bans),
-                          "Read Write Glob Grep", "blind")
-        job["parts"][-1]["status"] = "done" if r == 0 and os.path.exists(bans) else "failed"
+        with scratch_dir() as s:
+            bpath, bans = os.path.join(s, "blind.json"), os.path.join(s, "blind-answers.json")
+            write_json(bpath, blind)
+            r, _ = run_claude(job, blind_prompt(f'The paper is {bpath}; use each question\'s "no" as its number.', bans),
+                              s, "blind")
+            keep("blind", bans)
+        job["parts"][-1]["status"] = "done" if r == 0 and "blind" in found else "failed"
     ts = [threading.Thread(target=chunk, args=(i, c)) for i, c in enumerate(chunks)] + [threading.Thread(target=solve)]
     for t in ts:
         t.start()
@@ -566,16 +705,11 @@ def proofread(jid, d):
     # 4. merge and cross-check
     rows, missing = [], []
     for i, c in enumerate(chunks):
-        try:
-            with open(os.path.join(work, f"rows{i}.json"), encoding="utf-8") as f:
-                rows += [r for r in json.load(f) if isinstance(r, dict)]
-        except (OSError, ValueError):
+        if isinstance(found.get(i), list):
+            rows += [r for r in found[i] if isinstance(r, dict)]
+        else:
             missing.append(f"Q{c[0]['no']}-Q{c[-1]['no']}")
-    try:
-        with open(bans, encoding="utf-8") as f:
-            mine = {str(k): v for k, v in json.load(f).items()}
-    except (OSError, ValueError, AttributeError):
-        mine = None
+    mine = {str(k): v for k, v in found["blind"].items()} if isinstance(found.get("blind"), dict) else None
     keyrows = {}
     for r in rows:
         r["q"] = str(r.get("q", "")).lstrip("Qq ")
@@ -618,22 +752,26 @@ def proofread(jid, d):
     res = "\n".join(md)
     with open(report, "w", encoding="utf-8") as f:
         f.write(res)
-    shutil.rmtree(work, ignore_errors=True)
     ok = not missing and mine is not None
     job.update(result=res, files=[os.path.basename(report)], status="done",
                stage="Done" if ok else "Done, but some parts failed (see report)")
 
 
-def proofread_single(job, src, report, work):
+def proofread_single(job, path, text, report):
     """Fallback when her paper could not be copied into JSON: one full pass."""
-    prompt = (f"Follow the rules in {SKILL_MD}, section 'Proofread mode'. Do not ask questions. {src}\n\n"
-              "Solve every question yourself before comparing with her key, and check every option for a second correct answer. "
-              f"Reply only with the proofread table and the count line, in Markdown, and save the same report to {report}.")
     job["stage"] = "Proofreading (single pass)"
     job["parts"].append({"label": "Proofreader", "status": "writing"})
-    rc, res = run_claude(job, prompt, PR_TOOLS, "proofread")
+    with scratch_dir() as s:
+        out = os.path.join(s, "report.md")
+        prompt = (f"Follow the rules in {SKILL_MD}, section 'Proofread mode'. Do not ask questions. {paper_source(path, text, s)}\n\n"
+                  "Solve every question yourself before comparing with her key, and check every option for a second correct answer. "
+                  f"Reply only with the proofread table and the count line, in Markdown, and save the same report to {out}.")
+        rc, res = run_claude(job, prompt, s, "proofread")
+        md = read_output(out)
+    if md:
+        with open(report, "w", encoding="utf-8") as f:
+            f.write(md)
     job["parts"][-1]["status"] = "done" if rc == 0 else "failed"
-    shutil.rmtree(work, ignore_errors=True)
     job.update(result=res or "Claude Code stopped with an error. Run `claude` once in a terminal (Windows: PowerShell) and sign in.",
                files=[os.path.basename(report)] if os.path.exists(report) else [],
                status="done" if rc == 0 else "error", stage="Done" if rc == 0 else "Failed")
@@ -747,11 +885,10 @@ class H(BaseHTTPRequestHandler):
                 return self.send(400, {"error": "questions must be 1 to 200"})
             src = None
             if d.get("sourcedata"):
-                os.makedirs(INBOX, exist_ok=True)
-                nm = re.sub(r"[^\w.\-]", "_", os.path.basename(str(d.get("sourcename", "chapter"))))[:80]
-                src = os.path.join(INBOX, time.strftime("src-%H%M%S-") + nm)
-                with open(src, "wb") as f:
-                    f.write(base64.b64decode(str(d["sourcedata"]).split(",")[-1]))
+                try:
+                    src = save_upload(d["sourcedata"], d.get("sourcename", "chapter"), "src-")
+                except ValueError as e:
+                    return self.send(400, {"error": str(e)})
             raw_src = src
             d = {"exam": d["exam"], "type": d["type"], "level": d["level"], "count": d["count"],
                  "chapters": [clean(c, 80) for c in d.get("chapters", [])][:20], "format": d.get("format", "pdf"),
@@ -764,9 +901,18 @@ class H(BaseHTTPRequestHandler):
         elif self.path == "/api/proofread":
             if not d.get("filedata") and not d.get("text", "").strip():
                 return self.send(400, {"error": "add a file or paste the paper"})
+            if d.get("filedata"):
+                try:
+                    d["path"] = save_upload(d["filedata"], d.get("filename", "paper"), "")
+                except ValueError as e:
+                    return self.send(400, {"error": str(e)})
+            else:
+                d.pop("path", None)  # never take a file path from the request
             target = proofread
         else:
             return self.send(404, {"error": "unknown"})
+        if not has_restricted():
+            return self.send(400, {"error": UPDATE_MSG})
         if not signed_in():
             return self.send(400, {"error": "Claude Code is not signed in on this computer. Open Terminal (Mac) or "
                                             "PowerShell (Windows), type  claude  and sign in, then try again."})
